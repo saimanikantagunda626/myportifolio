@@ -5,43 +5,48 @@
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
 
-menuToggle.addEventListener("click", () => {
+if (menuToggle && navMenu) {
 
-    navMenu.classList.toggle("open");
+    menuToggle.addEventListener("click", () => {
 
-    const icon = menuToggle.querySelector("i");
-
-    if (navMenu.classList.contains("open")) {
-
-        icon.classList.remove("fa-bars");
-        icon.classList.add("fa-xmark");
-
-    } else {
-
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
-
-    }
-
-});
-
-
-/* Close mobile menu when clicking a link */
-
-document.querySelectorAll("#navMenu a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navMenu.classList.remove("open");
+        navMenu.classList.toggle("open");
 
         const icon = menuToggle.querySelector("i");
 
-        icon.classList.remove("fa-xmark");
-        icon.classList.add("fa-bars");
+        if (navMenu.classList.contains("open")) {
+
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+
+        } else {
+
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+
+        }
 
     });
 
-});
+
+    /* Close mobile menu when clicking a link */
+
+    document.querySelectorAll("#navMenu a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            navMenu.classList.remove("open");
+
+            const icon = menuToggle.querySelector("i");
+
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+
+        });
+
+    });
+
+}
+
 
 
 /* ==========================================
@@ -50,43 +55,56 @@ document.querySelectorAll("#navMenu a").forEach(link => {
 
 const themeToggle = document.getElementById("themeToggle");
 
-themeToggle.addEventListener("click", () => {
+if (themeToggle) {
 
-    document.body.classList.toggle("light");
+    themeToggle.addEventListener("click", () => {
 
-    const icon = themeToggle.querySelector("i");
+        document.body.classList.toggle("light");
 
-    if (document.body.classList.contains("light")) {
+        const icon = themeToggle.querySelector("i");
+
+        if (document.body.classList.contains("light")) {
+
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+
+            localStorage.setItem(
+                "portfolioTheme",
+                "light"
+            );
+
+        } else {
+
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+
+            localStorage.setItem(
+                "portfolioTheme",
+                "dark"
+            );
+
+        }
+
+    });
+
+
+    /* Load saved theme */
+
+    if (
+        localStorage.getItem("portfolioTheme") === "light"
+    ) {
+
+        document.body.classList.add("light");
+
+        const icon = themeToggle.querySelector("i");
 
         icon.classList.remove("fa-moon");
         icon.classList.add("fa-sun");
 
-        localStorage.setItem("portfolioTheme", "light");
-
-    } else {
-
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-
-        localStorage.setItem("portfolioTheme", "dark");
-
     }
 
-});
-
-
-/* Load saved theme */
-
-if (localStorage.getItem("portfolioTheme") === "light") {
-
-    document.body.classList.add("light");
-
-    const icon = themeToggle.querySelector("i");
-
-    icon.classList.remove("fa-moon");
-    icon.classList.add("fa-sun");
-
 }
+
 
 
 /* ==========================================
@@ -106,9 +124,15 @@ let wordIndex = 0;
 let charIndex = 0;
 let deleting = false;
 
+
 function typeEffect() {
 
+    if (!typingText) {
+        return;
+    }
+
     const currentWord = words[wordIndex];
+
 
     if (!deleting) {
 
@@ -117,13 +141,18 @@ function typeEffect() {
 
         charIndex++;
 
+
         if (charIndex === currentWord.length) {
 
             deleting = true;
 
-            setTimeout(typeEffect, 1600);
+            setTimeout(
+                typeEffect,
+                1600
+            );
 
             return;
+
         }
 
     } else {
@@ -133,31 +162,39 @@ function typeEffect() {
 
         charIndex--;
 
+
         if (charIndex === 0) {
 
             deleting = false;
 
             wordIndex++;
 
+
             if (wordIndex >= words.length) {
+
                 wordIndex = 0;
+
             }
 
         }
 
     }
 
+
     setTimeout(
         typeEffect,
         deleting ? 45 : 90
     );
+
 }
+
 
 typeEffect();
 
 
+
 /* ==========================================
-   CERTIFICATE VIEWER
+   CERTIFICATE + RESUME VIEWER
 ========================================== */
 
 const certificateModal =
@@ -176,12 +213,21 @@ const certificateButtons =
     document.querySelectorAll(".view-cert");
 
 
+
+/* Open certificate or resume */
+
 certificateButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
         const certificate =
             button.getAttribute("data-certificate");
+
+
+        if (!certificate) {
+            return;
+        }
+
 
         certificateFrame.src = certificate;
 
@@ -196,10 +242,8 @@ certificateButtons.forEach(button => {
 });
 
 
-/* Close certificate */
 
-closeCertificate.addEventListener("click", closeCertificateModal);
-
+/* Close certificate / resume modal */
 
 function closeCertificateModal() {
 
@@ -207,35 +251,63 @@ function closeCertificateModal() {
 
     certificateFrame.src = "";
 
+    openCertificate.href = "#";
+
     document.body.style.overflow = "";
 
 }
 
 
+if (closeCertificate) {
+
+    closeCertificate.addEventListener(
+        "click",
+        closeCertificateModal
+    );
+
+}
+
+
+
 /* Close when clicking outside */
 
-certificateModal.addEventListener("click", event => {
+if (certificateModal) {
 
-    if (event.target === certificateModal) {
+    certificateModal.addEventListener(
+        "click",
+        event => {
 
-        closeCertificateModal();
+            if (event.target === certificateModal) {
 
-    }
+                closeCertificateModal();
 
-});
+            }
+
+        }
+    );
+
+}
+
 
 
 /* Close using Escape */
 
-document.addEventListener("keydown", event => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    if (event.key === "Escape") {
+        if (
+            event.key === "Escape" &&
+            certificateModal.classList.contains("show")
+        ) {
 
-        closeCertificateModal();
+            closeCertificateModal();
+
+        }
 
     }
+);
 
-});
 
 
 /* ==========================================
@@ -245,29 +317,38 @@ document.addEventListener("keydown", event => {
 const backToTop =
     document.getElementById("backToTop");
 
-window.addEventListener("scroll", () => {
 
-    if (window.scrollY > 500) {
+if (backToTop) {
 
-        backToTop.classList.add("show");
+    window.addEventListener("scroll", () => {
 
-    } else {
+        if (window.scrollY > 500) {
 
-        backToTop.classList.remove("show");
+            backToTop.classList.add("show");
 
-    }
+        } else {
 
-});
+            backToTop.classList.remove("show");
 
+        }
 
-backToTop.addEventListener("click", () => {
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
     });
 
-});
+
+    backToTop.addEventListener(
+        "click",
+        () => {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+}
+
 
 
 /* ==========================================
@@ -280,9 +361,11 @@ const sections =
 const navLinks =
     document.querySelectorAll("#navMenu a");
 
+
 window.addEventListener("scroll", () => {
 
     let current = "";
+
 
     sections.forEach(section => {
 
@@ -292,12 +375,15 @@ window.addEventListener("scroll", () => {
         const sectionHeight =
             section.offsetHeight;
 
+
         if (
             window.scrollY >= sectionTop &&
-            window.scrollY < sectionTop + sectionHeight
+            window.scrollY <
+            sectionTop + sectionHeight
         ) {
 
-            current = section.getAttribute("id");
+            current =
+                section.getAttribute("id");
 
         }
 
@@ -308,8 +394,10 @@ window.addEventListener("scroll", () => {
 
         link.classList.remove("active");
 
+
         if (
-            link.getAttribute("href") === `#${current}`
+            link.getAttribute("href") ===
+            `#${current}`
         ) {
 
             link.classList.add("active");
@@ -321,15 +409,21 @@ window.addEventListener("scroll", () => {
 });
 
 
+
 /* ==========================================
    REVEAL ANIMATION
 ========================================== */
 
 const revealElements =
     document.querySelectorAll(
-        ".section-heading, .stat-card, .timeline-item, " +
-        ".skill-category, .project-card, .cert-card, " +
-        ".coding-card, .contact-card"
+        ".section-heading, " +
+        ".stat-card, " +
+        ".timeline-item, " +
+        ".skill-category, " +
+        ".project-card, " +
+        ".cert-card, " +
+        ".coding-card, " +
+        ".contact-card"
     );
 
 
@@ -337,12 +431,14 @@ revealElements.forEach(element => {
 
     element.style.opacity = "0";
 
-    element.style.transform = "translateY(25px)";
+    element.style.transform =
+        "translateY(25px)";
 
     element.style.transition =
         "opacity 0.7s ease, transform 0.7s ease";
 
 });
+
 
 
 const revealObserver =
@@ -371,6 +467,7 @@ const revealObserver =
             threshold: 0.1
         }
     );
+
 
 
 revealElements.forEach(element => {
