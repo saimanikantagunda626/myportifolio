@@ -1995,3 +1995,225 @@ footer {
         left: 5px;
     }
 }
+
+/* =====================================================
+   SPECIAL HACKATHON - 2ND PRIZE CARD
+   Does NOT affect other certificate cards
+===================================================== */
+
+.hackathon-card {
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 193, 7, 0.45);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 193, 7, 0.10),
+            rgba(255, 255, 255, 0.03)
+        );
+
+    box-shadow:
+        0 0 25px rgba(255, 193, 7, 0.10);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* Golden glow behind the card */
+
+.hackathon-card::before {
+    content: "";
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    top: -90px;
+    right: -90px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 193, 7, 0.12);
+
+    filter: blur(5px);
+
+    pointer-events: none;
+}
+
+
+/* Small decorative shine */
+
+.hackathon-card::after {
+    content: "🏆";
+
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    font-size: 28px;
+
+    opacity: 0.18;
+
+    transform: rotate(12deg);
+
+    pointer-events: none;
+}
+
+
+/* Hover effect */
+
+.hackathon-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(255, 193, 7, 0.85);
+
+    box-shadow:
+        0 15px 40px rgba(255, 193, 7, 0.18),
+        0 0 30px rgba(255, 193, 7, 0.12);
+}
+
+
+/* Trophy icon */
+
+.hackathon-card .cert-icon {
+    position: relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd54f,
+            #ffb300
+        );
+
+    color: #161616;
+
+    box-shadow:
+        0 8px 20px rgba(255, 193, 7, 0.25);
+}
+
+
+/* Hackathon label */
+
+.hackathon-card .cert-type {
+    color: #ffc107;
+
+    font-weight: 800;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* Hackathon title */
+
+.hackathon-card h3 {
+    position: relative;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd54f,
+            #ffb300
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* 2nd Prize badge */
+
+.hackathon-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    margin-top: 8px;
+    margin-bottom: 16px;
+
+    padding: 7px 14px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    color: #5c4100;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe082,
+            #ffc107
+        );
+
+    border: 1px solid rgba(255, 193, 7, 0.7);
+
+    box-shadow:
+        0 5px 15px rgba(255, 193, 7, 0.20);
+}
+
+
+/* View Certificate button */
+
+.hackathon-card .view-cert {
+    border-color: rgba(255, 193, 7, 0.5);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.hackathon-card .view-cert:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ffd54f,
+            #ffb300
+        );
+
+    color: #151515;
+
+    border-color: #ffc107;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(255, 193, 7, 0.25);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .hackathon-card {
+        transform: none;
+    }
+
+    .hackathon-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .hackathon-card::after {
+        font-size: 22px;
+        top: 12px;
+        right: 12px;
+    }
+
+}
